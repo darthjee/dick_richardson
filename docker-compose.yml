@@ -1,0 +1,18 @@
+version: '2'
+services:
+  base: &base
+    image: ruby:2.4.0
+    working_dir: /home/app/urna
+    volumes:
+      - .:/home/app/urna
+      - urna_gems_2_4_0:/usr/local/bundle
+
+  #################### CONTAINERS ####################
+
+  urna:
+    <<: *base
+    container_name: urna
+    command: bash -c 'gem install bundler; bundle install; /bin/bash'
+
+volumes:
+  urna_gems_2_4_0:
