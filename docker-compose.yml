@@ -14,5 +14,11 @@ services:
     container_name: urna
     command: bash -c 'gem install bundler; bundle install; /bin/bash'
 
+  urna_root:
+    <<: *base
+    container_name: urna
+    command: bash -c '/bin/bash'
+    user: root
+
 volumes:
   urna_gems_2_4_0:
