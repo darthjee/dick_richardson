@@ -4,4 +4,5 @@ set term postscript eps enhanced color
 set out "dilma.eps"
 
 plot 'dilma.dat' u ($1):($2) w lines t 'Aecio', \
-     'dilma.dat' u ($1):($3) w lines t 'Dilma'
+     'dilma.dat' u ($1):($3) w lines t 'Dilma', \
+     'dilma.dat' u ($1):($7) w lines t 'Indicador'
