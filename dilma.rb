@@ -15,11 +15,9 @@ averages = {
 f = File.open('dilma.dat', 'w')
 f.write("#id\tAecio\tDilma\n")
 
-voting = Voting.new(
-  f, 1000,
-  initial: 0.6, final: 0.4, error:0.4
-)
+voting = Voting.new(f, error: 0.4)
 
-voting.vote
+voting.vote(500, initial: 0.7, final: 0.5)
+voting.vote(5000, expected: 0.48)
 
 f.close
