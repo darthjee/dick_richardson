@@ -1,7 +1,7 @@
 version: '2'
 services:
   base: &base
-    image: ruby:2.4.0
+    build: .
     working_dir: /home/app/urna
     volumes:
       - .:/home/app/urna
