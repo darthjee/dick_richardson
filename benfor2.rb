@@ -1,4 +1,4 @@
-f = File.open('benfor3.txt', 'r')
+f = File.open('benfor3.dat', 'r')
 
 h = Hash.new { 0 }
 

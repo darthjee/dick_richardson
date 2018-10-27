@@ -1,4 +1,4 @@
-f = File.open('benfor.txt', 'w')
+f = File.open('benfor.dat', 'w')
 
 1000000.times do
   i = Random.rand(1000) + 1
