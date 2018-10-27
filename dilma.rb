@@ -1,11 +1,10 @@
 require 'darthjee/core_ext'
 
-require './lib/average'
-require './lib/urna'
+require './lib/voting'
 
 n_times = 10000
 initial = 0.7
-final = 0.4
+final = 0.3
 diff = final - initial
 
 averages = {
@@ -16,20 +15,11 @@ averages = {
 f = File.open('dilma.dat', 'w')
 f.write("#id\tAecio\tDilma\n")
 
-n_times.times do |i|
-  expected = initial + diff * i / n_times
+voting = Voting.new(
+  f, 1000,
+  initial: 0.6, final: 0.4, error:0.4
+)
 
-  urna = Urna.new(expected, error: 0.5)
-  a = urna.read
-  d = 1 - a
-
-  averages[:d] + d
-  averages[:a] + a
-
-  d = averages[:d].average
-  a = averages[:a].average
-
-  f.write("#{i}\t#{a}\t#{d}\n")
-end
+voting.vote
 
 f.close
