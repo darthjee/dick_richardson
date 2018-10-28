@@ -25,6 +25,7 @@ gem 'spring',        group: :development
 gem 'darthjee-core_ext'
 gem 'rake', '>= 12.3'
 gem 'faraday'
+gem 'clockwork'
 
 group :development, :test do
   gem 'factory_bot'

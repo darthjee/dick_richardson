@@ -46,6 +46,8 @@ GEM
       public_suffix (>= 2.0.2, < 4.0)
     arel (9.0.0)
     builder (3.2.3)
+    clockwork (2.0.3)
+      tzinfo
     coderay (1.1.2)
     concurrent-ruby (1.0.5)
     crack (0.4.3)
@@ -211,6 +213,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  clockwork
   danica
   darthjee-core_ext
   factory_bot

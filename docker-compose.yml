@@ -9,6 +9,8 @@ services:
       POSTGRES_PASSWORD: urna
     ports:
       - 127.0.0.1:$URNA_POSTGRES_PORT:5432
+    volumes:
+      - postgres_db:/var/lib/postgresql/data
 
   #################### Base  ####################
 
@@ -33,6 +35,14 @@ services:
       - RAILS_ENV=development
       - URNA_POSTGRES_PORT=5432
 
+  urna_clock:
+    <<: *base
+    container_name: urna_clock
+    command: clockwork config/clockwork.rb
+    environment:
+      - RAILS_ENV=development
+      - URNA_POSTGRES_PORT=5432
+
   urna_tests:
     <<: *base
     container_name: urna_tests
@@ -53,3 +63,4 @@ networks:
 
 volumes:
   urna_gems_2_4_0:
+  postgres_db:
