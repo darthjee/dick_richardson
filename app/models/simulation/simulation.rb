@@ -3,7 +3,7 @@ module Simulation
     has_many :ballots
 
     def partials
-      Partial.where(ballot_id: ballots)
+      Partial.joins(:ballot).where(simulation_ballots: { simulation_id: id })
     end
   end
 end
