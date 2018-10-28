@@ -33,3 +33,4 @@
 trials/*.dat
 trials/*.eps
 .bash_history
+coverage
