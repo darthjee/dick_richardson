@@ -33,6 +33,13 @@ describe Simulation::Simulation do
             create(:simulation_ballot, :with_partial, simulation: simulation)
           end.to change { simulation.partials.count }.by(1)
         end
+
+        it 'changes the result of the relation' do
+          relation = simulation.partials
+          expect do
+            create(:simulation_ballot, :with_partial, simulation: simulation)
+          end.to change(relation, :count).by(1)
+        end
       end
 
       context 'for other simulation' do

@@ -3,7 +3,7 @@ module Simulation
     has_many :ballots
 
     def partials
-      Partial.where(ballot_id: ballots.pluck(:id))
+      Partial.where(ballot_id: ballots)
     end
   end
 end
