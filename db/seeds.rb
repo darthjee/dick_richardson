@@ -11,3 +11,5 @@ s = Simulation::Simulation.create
     percentage: p, simulation: s
   ).create_partial
 end
+
+Voting::Voting.create
