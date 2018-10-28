@@ -1,24 +1,55 @@
 version: '2'
 services:
+  urna_postgres:
+    image: postgres:9.5
+    container_name: urna_postgres
+    env_file: .env
+    environment:
+      POSTGRES_USER: urna
+      POSTGRES_PASSWORD: urna
+    ports:
+      - 127.0.0.1:$URNA_POSTGRES_PORT:5432
+
+  #################### Base  ####################
+
   base: &base
     build: .
-    working_dir: /home/app/urna
+    env_file: .env
+    links:
+      - urna_postgres:postgres
     volumes:
       - .:/home/app/urna
       - urna_gems_2_4_0:/usr/local/bundle
 
   #################### CONTAINERS ####################
 
-  urna:
+  urna_app:
     <<: *base
-    container_name: urna
-    command: bash -c 'gem install bundler; bundle install; /bin/bash'
+    container_name: urna_app
+    command: /bin/bash bin/server.sh
+    ports:
+      - 0.0.0.0:3000:3000
+    environment:
+      - RAILS_ENV=development
+      - URNA_POSTGRES_PORT=5432
+
+  urna_tests:
+    <<: *base
+    container_name: urna_tests
+    command: /bin/bash bin/tests.sh
+    environment:
+      - RAILS_ENV=test
 
   urna_root:
     <<: *base
-    container_name: urna
-    command: bash -c '/bin/bash'
     user: root
+    container_name: urna_root
+    command: /bin/bash
+
+networks:
+  default:
+    external:
+      name: urna
 
 volumes:
   urna_gems_2_4_0:
