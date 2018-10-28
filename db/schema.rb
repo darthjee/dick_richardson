@@ -10,12 +10,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_10_28_142635) do
+ActiveRecord::Schema.define(version: 2018_10_28_143002) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "simulation_ballots", force: :cascade do |t|
+    t.float "percentage"
+  end
+
+  create_table "simulation_partials", force: :cascade do |t|
     t.float "percentage"
   end
 
