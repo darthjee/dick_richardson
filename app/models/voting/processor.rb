@@ -4,7 +4,7 @@ module Voting
 
     delegate :partials, to: :voting
 
-    attr_reader :voting
+    attr_reader :voting, :partial
 
     def initialize(voting = ::Voting::Voting.first)
       @voting = voting
@@ -13,7 +13,7 @@ module Voting
     def process
       return unless new_entry?
       create_partial
-      create_candidates
+      create_partial_candidates
     end
 
     private
@@ -22,9 +22,11 @@ module Voting
       @partial = partials.create(votes: votes, raw: raw)
     end
 
-    def create_candidates
+    def create_partial_candidates
       candidates.each do |candidate|
-        voting.candidates.find_or_create_by(name: candidate.name)
+        voting_candidate = voting.candidates.find_or_create_by(name: candidate.name)
+
+        partial.partial_candidates.create(candidate: voting_candidate, votes: candidate.votes)
       end
     end
 

@@ -10,6 +10,10 @@ module Voting
       def name
         hash['nm']
       end
+
+      def votes
+        hash['v'].to_i
+      end
     end
   end
 end
