@@ -8,9 +8,13 @@ class Looper
   def do_the_loop
     Voting::Processor.new.process
     puts "Current: #{voting.partials.count}"
-    sleep 60
+    sleep sleep_time
   rescue Exception => e
     puts "Error: #{e}"
+  end
+
+  def sleep_time
+    60 + Random.rand(10)
   end
 end
 
