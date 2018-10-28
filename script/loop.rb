@@ -14,7 +14,7 @@ class Looper
   end
 
   def sleep_time
-    60 + Random.rand(10)
+    90 + Random.rand(30)
   end
 end
 
