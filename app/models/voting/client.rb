@@ -4,6 +4,8 @@ module Voting
       JSON.parse(connection.get.body)
     end
 
+    private
+
     def connection
       @connection ||= build_connection
     end
