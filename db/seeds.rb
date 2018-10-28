@@ -6,5 +6,8 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 s = Simulation::Simulation.create
-b = Simulation::Ballot.create(percentage: 0.7, simulation: s)
-Simulation::Partial.create(ballot: b, percentage: 0.7)
+[0.7, 0.3, 0.52].each do |p|
+  Simulation::Ballot.create(
+    percentage: p, simulation: s
+  ).create_partial
+end
