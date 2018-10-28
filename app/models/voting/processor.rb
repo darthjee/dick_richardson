@@ -11,6 +11,7 @@ module Voting
     end
 
     def process
+      return unless voting.active
       return unless new_entry?
       create_partial
       create_partial_candidates

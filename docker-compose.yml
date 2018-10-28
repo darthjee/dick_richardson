@@ -35,6 +35,14 @@ services:
       - RAILS_ENV=development
       - URNA_POSTGRES_PORT=5432
 
+  urna_clock:
+    <<: *base
+    container_name: urna_clock
+    command: clockwork config/clockwork.rb
+    environment:
+      - RAILS_ENV=development
+      - URNA_POSTGRES_PORT=5432
+
   urna_tests:
     <<: *base
     container_name: urna_tests
