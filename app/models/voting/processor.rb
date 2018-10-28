@@ -13,12 +13,19 @@ module Voting
     def process
       return unless new_entry?
       create_partial
+      create_candidates
     end
 
     private
 
     def create_partial
       @partial = partials.create(votes: votes, raw: raw)
+    end
+
+    def create_candidates
+      candidates.each do |candidate|
+        voting.candidates.find_or_create_by(name: candidate.name)
+      end
     end
 
     def new_entry?

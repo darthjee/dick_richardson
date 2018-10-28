@@ -29,8 +29,8 @@ ActiveRecord::Schema.define(version: 2018_10_28_194810) do
   end
 
   create_table "voting_candidates", force: :cascade do |t|
-    t.integer "voting_id"
-    t.string "name"
+    t.integer "voting_id", null: false
+    t.string "name", null: false
   end
 
   create_table "voting_partial_candidates", force: :cascade do |t|

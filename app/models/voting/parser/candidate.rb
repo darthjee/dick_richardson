@@ -6,6 +6,10 @@ module Voting
       def initialize(hash)
         @hash = hash
       end
+
+      def name
+        hash['nm']
+      end
     end
   end
 end
