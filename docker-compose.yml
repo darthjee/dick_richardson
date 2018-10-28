@@ -9,6 +9,8 @@ services:
       POSTGRES_PASSWORD: urna
     ports:
       - 127.0.0.1:$URNA_POSTGRES_PORT:5432
+    volumes:
+      - postgres_db:/var/lib/postgresql/data
 
   #################### Base  ####################
 
@@ -53,3 +55,4 @@ networks:
 
 volumes:
   urna_gems_2_4_0:
+  postgres_db:
