@@ -1,7 +1,7 @@
 module Voting
   class Client
     def get
-      JSON.parse(connection.get.body)
+      connection.get.body
     end
 
     private
