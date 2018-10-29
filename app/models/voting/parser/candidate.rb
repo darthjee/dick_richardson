@@ -1,18 +1,14 @@
 module Voting
   class Parser
     class Candidate
-      attr_reader :hash
+      include Arstotzka
 
-      def initialize(hash)
-        @hash = hash
-      end
+      attr_reader :json
+      expose :name, full_path: :nm
+      expose :votes, full_path: :v, type: :integer
 
-      def name
-        hash['nm']
-      end
-
-      def votes
-        hash['v'].to_i
+      def initialize(json)
+        @json = json
       end
     end
   end
