@@ -8,13 +8,13 @@ describe Voting::Parser::Candidate do
 
   describe '#name' do
     it 'fetches the name from the hash' do
-      expect(subject.name).to eq('FERNANDO HADDAD')
+      expect(candidate.name).to eq('FERNANDO HADDAD')
     end
   end
 
   describe '#votes' do
-    it 'votes' do
-      expect(subject.votes).to eq(47040574)
+    it 'fetches the votes from the hash' do
+      expect(candidate.votes).to eq(47040574)
     end
   end
 end

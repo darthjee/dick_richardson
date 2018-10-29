@@ -1,22 +1,17 @@
 module Voting
   class Parser
     attr_reader :raw
+    delegate :votes, :candidates, to: :partial
 
     def initialize(raw)
       @raw = raw
     end
 
-    def votes
-      hash['ea'].to_i
-    end
-
-    def candidates
-      hash['cand'].map do |hash|
-        Parser::Candidate.new(hash)
-      end
-    end
-
     private
+
+    def partial
+      Parser::Partial.new(hash)
+    end
 
     def hash
       @hash ||= JSON.parse(raw)
