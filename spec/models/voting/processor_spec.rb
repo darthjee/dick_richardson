@@ -53,9 +53,11 @@ describe Voting::Processor do
     end
 
     context 'when there was a partial created before' do
-      let!(:candidate1) { create(:voting_candidate, name: 'FERNANDO HADDAD', voting: voting) }
-      let!(:candidate2) { create(:voting_candidate, name: 'JAIR BOLSONARO', voting: voting) }
-      let(:partial)     { create(:voting_partial, raw: partial_raw, votes: current_votes, voting: voting) }
+      let!(:candidate1)   { create(:voting_candidate, name: 'FERNANDO HADDAD', voting: voting) }
+      let!(:candidate2)   { create(:voting_candidate, name: 'JAIR BOLSONARO', voting: voting) }
+      let(:partial)       { create(:voting_partial, raw: partial_raw, votes: current_votes, voting: voting) }
+      let(:partial_raw)   { load_fixture_file('voting/raw_first.json') }
+      let(:current_votes) { 100 }
 
       before do
         voting.candidates.each do |candidate|
@@ -64,13 +66,32 @@ describe Voting::Processor do
       end
 
       context 'and the request returns new value' do
-        let(:partial_raw)   { load_fixture_file('voting/raw_first.json') }
-        let(:current_votes) { 100 }
-
         it 'does not create candidates' do
           expect do
             processor.process
           end.not_to change { voting.candidates.count }
+        end
+
+        it 'creates a new partial' do
+          expect do
+            processor.process
+          end.to change { voting.partials.count }.by(1)
+        end
+
+        it 'creates new candidates partials' do
+          expect do
+            processor.process
+          end.to change { voting.final_result.pluck(:id) }
+        end
+      end
+
+      context 'when only one candidate existed' do
+        let!(:candidate2) {}
+
+        it 'creates a new candidate' do
+          expect do
+            processor.process
+          end.to change { voting.candidates.count }.by(1)
         end
 
         it 'creates a new partial' do
