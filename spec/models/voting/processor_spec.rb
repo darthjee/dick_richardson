@@ -29,6 +29,27 @@ describe Voting::Processor do
           processor.process
         end.to change { voting.candidates.count }.by(2)
       end
+
+      it 'creates the candidates partials' do
+        expect do
+          processor.process
+        end.to change(voting, :final_result).from(nil)
+      end
+
+      it 'records the votes for each candidate' do
+        processor.process
+        expect(voting.final_result.pluck(:votes)).to eq([57797423, 47040574])
+      end
+
+      it 'records the raw result' do
+        processor.process
+        expect(voting.partials.last.raw).to eq(request_result)
+      end
+
+      it 'sets the full votes' do
+        processor.process
+        expect(voting.partials.last.votes).to eq(147303938)
+      end
     end
   end
 end
