@@ -108,7 +108,7 @@ describe Voting::Processor do
       end
 
       context 'and the request return the same old result' do
-        let(:partial_raw) { load_fixture_file('voting/tse_response_partial.json') }
+        let(:partial_raw)   { load_fixture_file('voting/tse_response_partial.json') }
         let(:current_votes) { 147303938 }
 
         it 'does not create candidates' do
