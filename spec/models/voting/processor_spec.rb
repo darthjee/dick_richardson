@@ -51,5 +51,36 @@ describe Voting::Processor do
         expect(voting.partials.last.votes).to eq(147303938)
       end
     end
+
+    context 'when there was a partial created before' do
+      let!(:candidate1) { create(:voting_candidate, name: 'FERNANDO HADDAD', voting: voting) }
+      let!(:candidate2) { create(:voting_candidate, name: 'JAIR BOLSONARO', voting: voting) }
+      let(:partial_raw) { load_fixture_file('voting/raw_first.json') }
+      let(:partial)     { create(:voting_partial, raw: partial_raw, voting: voting) }
+
+      before do
+        voting.candidates.each do |candidate|
+          partial.candidates.create(candidate: candidate, votes: 50)
+        end
+      end
+
+      it 'does not create candidates' do
+        expect do
+          processor.process
+        end.not_to change { voting.candidates.count }
+      end
+
+      it 'creates a new partial' do
+        expect do
+          processor.process
+        end.to change { voting.partials.count }.by(1)
+      end
+
+      it 'creates new candidates partials' do
+        expect do
+          processor.process
+        end.to change { voting.final_result.pluck(:id) }
+      end
+    end
   end
 end
