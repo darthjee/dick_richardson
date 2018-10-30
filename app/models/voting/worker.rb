@@ -1,6 +1,6 @@
 module Voting
   class Worker
-    delegate :votes, :candidates, to: :parser
+    delegate :votes, :candidates, :raw, to: :parser
 
     delegate :partials, to: :voting
 
@@ -40,16 +40,8 @@ module Voting
       @client ||= Client.new
     end
 
-    def raw
-      @raw ||= client.get
-    end
-
-    def hash
-      @hash = JSON.parse(raw)
-    end
-
     def parser
-      @parser ||= Parser.new(hash)
+      @parser ||= Parser.new(raw: client.get)
     end
   end
 end

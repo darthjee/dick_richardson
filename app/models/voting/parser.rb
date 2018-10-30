@@ -3,8 +3,17 @@ module Voting
     attr_reader :hash
     delegate :votes, :candidates, to: :partial
 
-    def initialize(hash)
+    def initialize(hash: nil, raw: nil)
       @hash = hash
+      @raw = raw
+    end
+
+    def hash
+      @hash ||= JSON.parse(raw)
+    end
+
+    def raw
+      @raw ||= hash.to_hash
     end
 
     private
