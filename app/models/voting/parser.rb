@@ -13,7 +13,7 @@ module Voting
     end
 
     def raw
-      @raw ||= hash.to_hash
+      @raw ||= hash.to_json
     end
 
     private
