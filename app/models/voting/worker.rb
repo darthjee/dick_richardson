@@ -1,12 +1,12 @@
 module Voting
   class Worker
-    delegate :votes, :candidates, :raw, to: :parser
+    delegate :votes, :candidates, to: :parser
 
     delegate :partials, to: :voting
 
     attr_reader :voting, :partial
 
-    def initialize(voting = ::Voting::Voting.first)
+    def initialize(voting  = ::Voting::Voting.first)
       @voting = voting
     end
 
@@ -40,8 +40,16 @@ module Voting
       @client ||= Client.new
     end
 
+    def raw
+      @raw ||= client.get
+    end
+
+    def hash
+      @hash = JSON.parse(raw)
+    end
+
     def parser
-      @parser ||= Parser.new(client.get)
+      @parser ||= Parser.new(hash)
     end
   end
 end
