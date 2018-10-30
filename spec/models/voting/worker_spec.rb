@@ -1,11 +1,11 @@
 require 'spec_helper'
 
-describe Voting::Processor do
-  subject(:processor) { described_class.new(voting) }
+describe Voting::Worker do
+  subject(:worker) { described_class.new(voting) }
 
   let(:voting) { create(:voting) }
 
-  describe '#process' do
+  describe '#perform' do
     let(:request_result) { load_fixture_file('voting/tse_response_partial.json') }
     let(:time_integer)   { Time.now.to_i }
 
@@ -21,34 +21,34 @@ describe Voting::Processor do
     context 'when there is no partial' do
       it 'creates the partial' do
         expect do
-          processor.process
+          worker.perform
         end.to change { voting.partials.count }.by(1)
       end
 
       it 'creates the candidates' do
         expect do
-          processor.process
+          worker.perform
         end.to change { voting.candidates.count }.by(2)
       end
 
       it 'creates the candidates partials' do
         expect do
-          processor.process
+          worker.perform
         end.to change(voting, :final_result).from(nil)
       end
 
       it 'records the votes for each candidate' do
-        processor.process
+        worker.perform
         expect(voting.final_result.pluck(:votes)).to eq([57797423, 47040574])
       end
 
       it 'records the raw result' do
-        processor.process
+        worker.perform
         expect(voting.partials.last.raw).to eq(request_result)
       end
 
       it 'sets the full votes' do
-        processor.process
+        worker.perform
         expect(voting.partials.last.votes).to eq(147303938)
       end
     end
@@ -69,19 +69,19 @@ describe Voting::Processor do
       context 'and the request returns new value' do
         it 'does not create candidates' do
           expect do
-            processor.process
+            worker.perform
           end.not_to change { voting.candidates.count }
         end
 
         it 'creates a new partial' do
           expect do
-            processor.process
+            worker.perform
           end.to change { voting.partials.count }.by(1)
         end
 
         it 'creates new candidates partials' do
           expect do
-            processor.process
+            worker.perform
           end.to change { voting.final_result.pluck(:id) }
         end
       end
@@ -91,19 +91,19 @@ describe Voting::Processor do
 
         it 'creates a new candidate' do
           expect do
-            processor.process
+            worker.perform
           end.to change { voting.candidates.count }.by(1)
         end
 
         it 'creates a new partial' do
           expect do
-            processor.process
+            worker.perform
           end.to change { voting.partials.count }.by(1)
         end
 
         it 'creates new candidates partials' do
           expect do
-            processor.process
+            worker.perform
           end.to change { voting.final_result.pluck(:id) }
         end
       end
@@ -114,22 +114,23 @@ describe Voting::Processor do
 
         it 'does not create candidates' do
           expect do
-            processor.process
+            worker.perform
           end.not_to change { voting.candidates.count }
         end
 
         it 'does not creates a new partial' do
           expect do
-            processor.process
+            worker.perform
           end.not_to change { voting.partials.count }
         end
 
         it 'does not create new candidates partials' do
           expect do
-            processor.process
+            worker.perform
           end.not_to change { voting.final_result.pluck(:id) }
         end
       end
     end
   end
 end
+
