@@ -4,10 +4,11 @@ module Voting
 
     delegate :partials, to: :voting
 
-    attr_reader :voting, :partial
+    attr_reader :voting, :partial, :parser_args
 
-    def initialize(voting = ::Voting::Voting.first)
+    def initialize(voting, **parser_args)
       @voting = voting
+      @parser_args = parser_args
     end
 
     def process
@@ -36,12 +37,8 @@ module Voting
       votes > partials.maximum(:votes)
     end
 
-    def client
-      @client ||= Client.new
-    end
-
     def parser
-      @parser ||= Parser.new(client.get)
+      @parser ||= Parser.new(parser_args)
     end
   end
 end
