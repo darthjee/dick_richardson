@@ -25,7 +25,9 @@ shared_examples 'a method call that creates partial' do |method_name|
 
   it 'records the raw result' do
     subject.public_send(method_name)
-    expect(voting.partials.last.raw).to eq(raw)
+    partial_hash = JSON.parse(voting.partials.last.raw)
+    real_hash = JSON.parse(raw)
+    expect(partial_hash).to eq(real_hash)
   end
 end
 
@@ -58,6 +60,7 @@ shared_examples 'a method call that does not change anything' do |method_name|
 end
 
 shared_examples 'a method that process votes entries' do |method_name|
+  let(:voting) { create(:voting) }
   let(:raw) { load_fixture_file('voting/tse_response_partial.json') }
 
   context 'when there is no partial' do

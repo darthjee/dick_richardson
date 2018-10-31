@@ -3,10 +3,7 @@ require 'spec_helper'
 describe Voting::Worker do
   subject(:worker) { described_class.new(voting) }
 
-  let(:voting) { create(:voting) }
-
   describe '#perform' do
-    let(:request_result) { load_fixture_file('voting/tse_response_partial.json') }
     let(:time_integer)   { Time.now.to_i }
 
     let(:request_url) do
@@ -15,7 +12,7 @@ describe Voting::Worker do
 
     before do
       allow_any_instance_of(Time).to receive(:to_i).and_return(time_integer)
-      stub_request(:get, request_url).to_return(status: 200, body: request_result)
+      stub_request(:get, request_url).to_return(status: 200, body: raw)
     end
 
     it_behaves_like "a method that process votes entries", :perform
