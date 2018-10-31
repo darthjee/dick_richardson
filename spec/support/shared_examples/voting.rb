@@ -25,9 +25,7 @@ shared_examples 'a method call that creates partial' do |method_name|
 
   it 'records the raw result' do
     subject.public_send(method_name)
-    partial_hash = JSON.parse(voting.partials.last.raw)
-    real_hash = JSON.parse(raw)
-    expect(partial_hash).to eq(real_hash)
+    expect(voting.partials.last.raw).to be_json_like(raw)
   end
 end
 

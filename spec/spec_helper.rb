@@ -29,6 +29,8 @@ RSpec.configure do |config|
   config.order = 'random'
   config.infer_spec_type_from_file_location!
 
+  config.include(RSpec::Matchers::Custom)
+
   config.before do
     Rails.cache.clear
   end
