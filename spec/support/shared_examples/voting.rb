@@ -25,9 +25,7 @@ shared_examples 'a method call that creates partial' do |method_name|
 
   it 'records the raw result' do
     subject.public_send(method_name)
-    partial_raw = JSON.parse(voting.partials.last.raw)
-    real_raw = JSON.parse(raw).as_json
-    expect(partial_raw).to eq(real_raw)
+    expect(voting.partials.last.raw).to be_json_like(raw)
   end
 end
 
@@ -55,54 +53,73 @@ shared_examples 'a method call that does not change anything' do |method_name|
   it 'does not create new candidates partials' do
     expect do
       subject.public_send(method_name)
-    end.not_to change { voting.final_result.pluck(:id) }
+    end.not_to change { voting.final_result&.pluck(:id) }
   end
 end
 
 shared_examples 'a method that process votes entries' do |method_name|
-  let(:voting) { create(:voting) }
-  let(:raw) { load_fixture_file('voting/tse_response_partial.json') }
+  let(:voting) { create(:voting, active: active) }
+  let(:raw)    { load_fixture_file('voting/tse_response_partial.json') }
+  let(:active) { true }
 
-  context 'when there is no partial' do
+  context 'when there is no partial registered' do
     it_behaves_like 'a method call that creates partial', method_name
     it_behaves_like 'a method call that creates candidates', method_name, 2
 
-    context 'when there was a partial created before' do
-      let!(:candidate1)   { create(:voting_candidate, name: 'FERNANDO HADDAD', voting: voting) }
-      let!(:candidate2)   { create(:voting_candidate, name: 'JAIR BOLSONARO', voting: voting) }
-      let(:partial)       { create(:voting_partial, raw: partial_raw, votes: current_votes, voting: voting) }
-      let(:partial_raw)   { load_fixture_file('voting/raw_first.json') }
-      let(:current_votes) { 100 }
+    context 'but the voting is inactive' do
+      let(:active) { false }
 
-      before do
-        voting.candidates.each do |candidate|
-          partial.candidates.create(candidate: candidate, votes: 50)
-        end
+      it_behaves_like 'a method call that does not change anything', method_name
+    end
+  end
+
+  context 'when there was a partial created before' do
+    let!(:candidate1)   { create(:voting_candidate, name: 'FERNANDO HADDAD', voting: voting) }
+    let!(:candidate2)   { create(:voting_candidate, name: 'JAIR BOLSONARO', voting: voting) }
+    let(:partial)       { create(:voting_partial, raw: partial_raw, votes: current_votes, voting: voting) }
+    let(:partial_raw)   { load_fixture_file('voting/raw_first.json') }
+    let(:current_votes) { 100 }
+
+    before do
+      voting.candidates.each do |candidate|
+        partial.candidates.create(candidate: candidate, votes: 50)
+      end
+    end
+
+    context 'and the request returns new value' do
+      it_behaves_like 'a method call that creates partial', method_name
+
+      it 'does not create candidates' do
+        expect do
+          subject.public_send(method_name)
+        end.not_to change { voting.candidates.count }
       end
 
-      context 'and the request returns new value' do
-        it_behaves_like 'a method call that creates partial', method_name
-
-        it 'does not create candidates' do
-          expect do
-            subject.public_send(method_name)
-          end.not_to change { voting.candidates.count }
-        end
-      end
-
-      context 'when only one candidate existed' do
-        let!(:candidate2) {}
-
-        it_behaves_like 'a method call that creates partial', method_name
-        it_behaves_like 'a method call that creates candidates', method_name, 1
-      end
-
-      context 'and the request return the same old result' do
-        let(:partial_raw)   { load_fixture_file('voting/tse_response_partial.json') }
-        let(:current_votes) { 147303938 }
+      context 'but the voting is inactive' do
+        let(:active) { false }
 
         it_behaves_like 'a method call that does not change anything', method_name
       end
+    end
+
+    context 'when only one candidate existed' do
+      let!(:candidate2) {}
+
+      it_behaves_like 'a method call that creates partial', method_name
+      it_behaves_like 'a method call that creates candidates', method_name, 1
+
+      context 'but the voting is inactive' do
+        let(:active) { false }
+
+        it_behaves_like 'a method call that does not change anything', method_name
+      end
+    end
+
+    context 'and the request return the same old result' do
+      let(:partial_raw)   { load_fixture_file('voting/tse_response_partial.json') }
+      let(:current_votes) { 147303938 }
+
+      it_behaves_like 'a method call that does not change anything', method_name
     end
   end
 end
