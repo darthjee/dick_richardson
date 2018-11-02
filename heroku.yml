@@ -12,4 +12,4 @@ release:
     - rake db:migrate
   image: web
 run:
-  web: bundle exec rails s -p 0.0.0.0:80
+  web: bundle exec rails s -b 0.0.0.0 -p 80
