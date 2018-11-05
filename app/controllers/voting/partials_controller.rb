@@ -5,6 +5,10 @@ class Voting::PartialsController < ApplicationController
     processor.process
   end
 
+  def index_raw
+    render json: voting.partials.map(&:raw_hash)
+  end
+
   private
 
   def processor
