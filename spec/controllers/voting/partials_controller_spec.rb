@@ -1,18 +1,17 @@
 require 'spec_helper'
 
 describe Voting::PartialsController, type: :controller do
-  let(:voting)  { create(:voting, active: active) }
-  let(:active)  { true }
-  let(:payload) { load_json_fixture_file('voting/tse_response_partial.json') }
+  let(:base_parameters) { { voting_id: voting.id } }
+  let(:parameters)      { base_parameters }
+  let(:response_json)   { JSON.parse(response.body) }
 
-  let(:parameters) do
-    {
-      voting_id: voting.id,
-      payload: payload
-    }
-  end
+  describe 'POST /create' do
+    let(:voting)  { create(:voting, active: active) }
+    let(:active)  { true }
+    let(:payload) { load_json_fixture_file('voting/tse_response_partial.json') }
 
-  describe 'POST create' do
+    let(:parameters) { base_parameters.merge(payload: payload) }
+
     context 'when the request happens' do
       context 'when it is a new partial result' do
         it 'creates a new partial' do
@@ -70,6 +69,25 @@ describe Voting::PartialsController, type: :controller do
       it do
         expect(response).to be_a_successful
       end
+    end
+  end
+
+  describe 'GET /raw' do
+    let(:raw)      { load_fixture_file('voting/tse_response_partial.json') }
+    let(:raw_hash) { load_json_fixture_file('voting/tse_response_partial.json') }
+    let(:voting)   { partial.voting }
+    let!(:partial) { create(:voting_partial, raw: raw) }
+
+    before do
+      get :index_raw, params: parameters
+    end
+
+    it 'returns all raw entities' do
+      expect(response_json).to eq([ raw_hash ])
+    end
+
+    it do
+      expect(response).to be_a_successful
     end
   end
 end
