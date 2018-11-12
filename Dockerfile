@@ -1,4 +1,4 @@
-FROM darthjee/taap:0.0.1
+FROM darthjee/taap:0.0.3
 
 WORKDIR /home/app/urna/
 ADD Gemfile* /home/app/urna/
