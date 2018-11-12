@@ -1,9 +1,8 @@
-FROM darthjee/taap:0.0.1
+FROM darthjee/taap:0.0.3
 
 WORKDIR /home/app/urna/
-ADD * /home/app/urna/
+ADD . /home/app/urna/
 
 USER root
-RUN bundle install --clean
 
-USER app
+RUN bundle install --clean

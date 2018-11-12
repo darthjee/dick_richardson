@@ -56,6 +56,17 @@ services:
     container_name: urna_root
     command: /bin/bash
 
+  urna_production:
+    build:
+      context: ./
+      dockerfile: Dockerfile.production
+    env_file: .env
+    links:
+      - urna_postgres:postgres
+    command: /bin/bash
+
+  #################### CONTAINERS ####################
+
 networks:
   default:
     external:
