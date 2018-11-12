@@ -30,6 +30,10 @@ group :development, :test do
   gem 'rails-controller-testing'
 end
 
+group :development do
+  gem 'listen'
+end
+
 group :test do
   gem 'webmock'
 end
