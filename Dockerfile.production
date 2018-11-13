@@ -1,7 +1,6 @@
 FROM darthjee/taap:0.0.3
 
-WORKDIR /home/app/urna/
-ADD . /home/app/urna/
+ADD . /home/app/app/
 
 USER root
 
