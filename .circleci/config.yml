@@ -1,0 +1,10 @@
+version: 2
+jobs:
+  build:
+    docker:
+      - image: darthjee/circleci_taap:0.0.3
+    steps:
+      - checkout
+      - run:
+          name: Bundle install
+          command: sudo bundle install;
