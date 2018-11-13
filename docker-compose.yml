@@ -64,6 +64,12 @@ services:
     links:
       - urna_postgres:postgres
     command: /bin/bash
+    environment:
+      - RAILS_ENV=production
+      - URNA_POSTGRES_PORT=5432
+    command: bin/rails server -p 8080 -e production
+    ports:
+      - 0.0.0.0:8080:8080
 
   #################### CONTAINERS ####################
 
