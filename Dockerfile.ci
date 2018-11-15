@@ -1,0 +1,10 @@
+FROM darthjee/circleci_taap:0.0.3
+
+USER root
+
+ADD . /home/circleci/app/
+RUN chown circleci /home/circleci -R
+
+RUN bundle install --clean
+
+USER circleci

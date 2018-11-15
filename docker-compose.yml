@@ -71,6 +71,19 @@ services:
     ports:
       - 0.0.0.0:8080:8080
 
+  urna_ci:
+    build:
+      context: ./
+      dockerfile: Dockerfile.ci
+    env_file: .env
+    links:
+      - urna_postgres:postgres
+    command: /bin/bash
+    environment:
+      - RAILS_ENV=test
+      - URNA_POSTGRES_PORT=5432
+    command: bundle exec rspec
+
   #################### CONTAINERS ####################
 
 networks:
