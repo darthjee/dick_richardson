@@ -2,9 +2,18 @@ version: 2
 jobs:
   build:
     docker:
-      - image: darthjee/circleci_taap:0.0.3
+      - image: darthjee/circleci_taap:0.1.0
     steps:
       - checkout
       - run:
           name: Bundle install
           command: sudo bundle install;
+      - run:
+          name: Prepare Coverage
+          command: cc-test-reporter before-build
+      - run:
+          name: RSpec
+          command: bundle exec rspec
+      - run:
+          name: Report Coverage
+          command: cc-test-reporter after-build --exit-code $?
