@@ -10,43 +10,6 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_10_28_194810) do
-
-  # These are extensions that must be enabled in order to support this database
-  enable_extension "plpgsql"
-
-  create_table "simulation_ballots", force: :cascade do |t|
-    t.float "percentage", null: false
-    t.integer "simulation_id", null: false
-  end
-
-  create_table "simulation_partials", force: :cascade do |t|
-    t.float "percentage", null: false
-    t.integer "ballot_id", null: false
-  end
-
-  create_table "simulation_simulations", force: :cascade do |t|
-  end
-
-  create_table "voting_candidates", force: :cascade do |t|
-    t.integer "voting_id", null: false
-    t.string "name", null: false
-  end
-
-  create_table "voting_partial_candidates", force: :cascade do |t|
-    t.integer "partial_id", null: false
-    t.integer "candidate_id", null: false
-    t.integer "votes", null: false
-  end
-
-  create_table "voting_partials", force: :cascade do |t|
-    t.integer "voting_id", null: false
-    t.text "raw", null: false
-    t.integer "votes", default: 0, null: false
-  end
-
-  create_table "voting_votings", force: :cascade do |t|
-    t.boolean "active", default: false
-  end
+ActiveRecord::Schema.define(version: 0) do
 
 end

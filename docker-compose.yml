@@ -1,83 +1,71 @@
-version: '2'
+version: '3'
 services:
-  urna_postgres:
-    image: postgres:9.5
-    container_name: urna_postgres
+  dick_richardson_mysql:
+    image: mysql:5.7
+    container_name: dick_richardson_mysql
     env_file: .env
     environment:
-      POSTGRES_USER: urna
-      POSTGRES_PASSWORD: urna
+      MYSQL_ROOT_PASSWORD: dick_richardson
     ports:
-      - 127.0.0.1:$URNA_POSTGRES_PORT:5432
-    volumes:
-      - postgres_db:/var/lib/postgresql/data
+      - 127.0.0.1:$DICK_RICHARDSON_MYSQL_PORT:3306
 
   #################### Base  ####################
 
   base: &base
-    build: .
-    env_file: .env
-    links:
-      - urna_postgres:postgres
+    image: darthjee/dick_richardson
     volumes:
-      - .:/home/app/urna
-      - urna_gems_2_4_0:/usr/local/bundle
+      - ./source:/home/app/app
+    links:
+      - dick_richardson_mysql:mysql
+    env_file: .env
 
+
+  base_build:
+    <<: *base
+    build:
+      context: .
+      dockerfile: Dockerfile.dick_richardson
+    command: echo done
+
+  production_base_build:
+    image: darthjee/production_dick_richardson
+    env_file: .env
+    environment:
+      RAILS_ENV: production
+    build:
+      context: .
+      dockerfile: Dockerfile.production_dick_richardson
+    links:
+      - dick_richardson_mysql:mysql
+    command: echo done
   #################### CONTAINERS ####################
 
-  urna_app:
+  dick_richardson_app:
     <<: *base
-    container_name: urna_app
+    container_name: dick_richardson_app
     command: /bin/bash bin/server.sh
+    depends_on: [base_build]
     ports:
-      - 0.0.0.0:3000:3000
+      - 127.0.0.1:3000:3000
     environment:
       - RAILS_ENV=development
-      - URNA_POSTGRES_PORT=5432
+      - DICK_RICHARDSON_MYSQL_PORT=3306
 
-  urna_clock:
+  dick_richardson_tests:
     <<: *base
-    container_name: urna_clock
-    command: clockwork config/clockwork.rb
-    environment:
-      - RAILS_ENV=development
-      - URNA_POSTGRES_PORT=5432
-
-  urna_tests:
-    <<: *base
-    container_name: urna_tests
+    container_name: dick_richardson_tests
     command: /bin/bash bin/tests.sh
+    depends_on: [base_build]
     environment:
       - RAILS_ENV=test
 
-  urna_root:
+  dick_richardson_root:
     <<: *base
     user: root
-    container_name: urna_root
+    container_name: dick_richardson_root
     command: /bin/bash
-
-  urna_production:
-    build:
-      context: ./
-      dockerfile: Dockerfile.production
-    env_file: .env
-    links:
-      - urna_postgres:postgres
-    command: /bin/bash
-    environment:
-      - RAILS_ENV=production
-      - URNA_POSTGRES_PORT=5432
-    command: bin/rails server -p 8080 -e production
-    ports:
-      - 0.0.0.0:8080:8080
-
-  #################### CONTAINERS ####################
-
-networks:
-  default:
-    external:
-      name: urna
-
-volumes:
-  urna_gems_2_4_0:
-  postgres_db:
+    depends_on: [base_build]
+  dick_richardson_production:
+    env_file: .env.production
+    container_name: dick_richardson_production
+    image: $PRODUCTION_IMAGE

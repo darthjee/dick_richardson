@@ -1,36 +1,27 @@
-<%
-  socket = [
-    ENV["BOXEN_MYSQL_SOCKET"],
-    "/var/run/mysql5/mysqld.sock",
-    "/tmp/mysql.sock"
-  ].detect { |f| f && File.exist?(f) }
-  port = 5432
-%>
-
 development: &development
-  adapter: postgresql
+  adapter: mysql2
   encoding: utf8
-  database: urna_development
+  database: <%= ENV["DICK_RICHARDSON_MYSQL_NAME"] %>_development
   pool: 5
-  username: <%= ENV["URNA_POSTGRES_USER"] %>
-  password: <%= ENV["URNA_POSTGRES_PASSWORD"] %>
-  host: <%= ENV["URNA_POSTGRES_HOST"] %>
-<% if socket %>
-  socket: <%= socket %>
-<% else %>
-  port: <%= ENV["URNA_POSTGRES_PORT"] %>
-<% end %>
+  username: <%= ENV["DICK_RICHARDSON_MYSQL_USER"] %>
+  password: <%= ENV["DICK_RICHARDSON_MYSQL_PASSWORD"] %>
+  host: <%= ENV["DICK_RICHARDSON_MYSQL_HOST"] %>
+  port: <%= ENV["DICK_RICHARDSON_MYSQL_PORT"] %>
 
 # Warning: The database defined as "test" will be erased and
 # re-generated from your development database when you run "rake".
 # Do not set this db to the same as development or production.
 test: &test
   <<: *development
-  database: urna_test
+  database: <%= ENV["DICK_RICHARDSON_MYSQL_NAME"] %>_test
 
 test_readonly:
   <<: *test
 
 production: &production
   <<: *development
-  database: urna_production
+  username: <%= ENV["DICK_RICHARDSON_MYSQL_USER"] %>
+  password: <%= ENV["DICK_RICHARDSON_MYSQL_PASSWORD"] %>
+  host: <%= ENV["DICK_RICHARDSON_MYSQL_HOST"] %>
+  port: <%= ENV["DICK_RICHARDSON_MYSQL_PORT"] %>
+  database: <%= ENV["DICK_RICHARDSON_MYSQL_NAME"] %>
