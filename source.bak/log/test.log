@@ -1,0 +1,61 @@
+  [1m[35m (3.3ms)[0m  [1m[35mSET NAMES utf8,  @@SESSION.sql_mode = CONCAT(CONCAT(@@sql_mode, ',STRICT_ALL_TABLES'), ',NO_AUTO_VALUE_ON_ZERO'),  @@SESSION.sql_auto_is_null = 0, @@SESSION.wait_timeout = 2147483[0m
+  [1m[35m (0.7ms)[0m  [1m[35mCREATE DATABASE `dick_richardson_test` DEFAULT CHARACTER SET `utf8`[0m
+  [1m[35m (0.4ms)[0m  [1m[35mSET NAMES utf8,  @@SESSION.sql_mode = CONCAT(CONCAT(@@sql_mode, ',STRICT_ALL_TABLES'), ',NO_AUTO_VALUE_ON_ZERO'),  @@SESSION.sql_auto_is_null = 0, @@SESSION.wait_timeout = 2147483[0m
+  [1m[35m (18.3ms)[0m  [1m[35mCREATE TABLE `schema_migrations` (`version` varchar(255) NOT NULL PRIMARY KEY)[0m
+  [1m[35m (11.2ms)[0m  [1m[35mCREATE TABLE `ar_internal_metadata` (`key` varchar(255) NOT NULL PRIMARY KEY, `value` varchar(255), `created_at` datetime NOT NULL, `updated_at` datetime NOT NULL)[0m
+  [1m[35m (0.9ms)[0m  [1m[34mSELECT GET_LOCK('399719799935377320', 0)[0m
+  [1m[35m (0.6ms)[0m  [1m[34mSELECT `schema_migrations`.`version` FROM `schema_migrations` ORDER BY `schema_migrations`.`version` ASC[0m
+Migrating to CreateSimulationBallots (20181028142635)
+  [1m[35m (15.4ms)[0m  [1m[35mCREATE TABLE `simulation_ballots` (`id` bigint NOT NULL AUTO_INCREMENT PRIMARY KEY, `percentage` float(24))[0m
+  [1m[35m (0.5ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.7ms)[0m  [1m[32mINSERT INTO `schema_migrations` (`version`) VALUES ('20181028142635')[0m
+  [1m[35m (2.2ms)[0m  [1m[35mCOMMIT[0m
+Migrating to CreateSimulationPartials (20181028143002)
+  [1m[35m (12.0ms)[0m  [1m[35mCREATE TABLE `simulation_partials` (`id` bigint NOT NULL AUTO_INCREMENT PRIMARY KEY, `percentage` float(24))[0m
+  [1m[35m (0.5ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.9ms)[0m  [1m[32mINSERT INTO `schema_migrations` (`version`) VALUES ('20181028143002')[0m
+  [1m[35m (3.4ms)[0m  [1m[35mCOMMIT[0m
+Migrating to CreateSimulationSimulations (20181028143619)
+  [1m[35m (12.5ms)[0m  [1m[35mCREATE TABLE `simulation_simulations` (`id` bigint NOT NULL AUTO_INCREMENT PRIMARY KEY)[0m
+  [1m[35m (0.6ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.7ms)[0m  [1m[32mINSERT INTO `schema_migrations` (`version`) VALUES ('20181028143619')[0m
+  [1m[35m (2.2ms)[0m  [1m[35mCOMMIT[0m
+Migrating to FixDatabases (20181028144111)
+  [1m[35m (21.9ms)[0m  [1m[35mALTER TABLE `simulation_ballots` CHANGE `percentage` `percentage` float(24) NOT NULL[0m
+  [1m[35m (19.3ms)[0m  [1m[35mALTER TABLE `simulation_ballots` ADD `simulation_id` int NOT NULL[0m
+  [1m[35m (20.1ms)[0m  [1m[35mALTER TABLE `simulation_partials` CHANGE `percentage` `percentage` float(24) NOT NULL[0m
+  [1m[35m (19.3ms)[0m  [1m[35mALTER TABLE `simulation_partials` ADD `ballot_id` int NOT NULL[0m
+  [1m[35m (0.4ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.6ms)[0m  [1m[32mINSERT INTO `schema_migrations` (`version`) VALUES ('20181028144111')[0m
+  [1m[35m (1.8ms)[0m  [1m[35mCOMMIT[0m
+Migrating to VotingVotings (20181028191714)
+  [1m[35m (13.3ms)[0m  [1m[35mCREATE TABLE `voting_votings` (`id` bigint NOT NULL AUTO_INCREMENT PRIMARY KEY)[0m
+  [1m[35m (0.7ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.7ms)[0m  [1m[32mINSERT INTO `schema_migrations` (`version`) VALUES ('20181028191714')[0m
+  [1m[35m (2.6ms)[0m  [1m[35mCOMMIT[0m
+Migrating to CreateVotingPartials (20181028192013)
+  [1m[35m (13.8ms)[0m  [1m[35mCREATE TABLE `voting_partials` (`id` bigint NOT NULL AUTO_INCREMENT PRIMARY KEY, `voting_id` int NOT NULL, `raw` text NOT NULL, `votes` int DEFAULT 0 NOT NULL)[0m
+  [1m[35m (0.6ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.7ms)[0m  [1m[32mINSERT INTO `schema_migrations` (`version`) VALUES ('20181028192013')[0m
+  [1m[35m (2.0ms)[0m  [1m[35mCOMMIT[0m
+Migrating to CreateVotingCandidates (20181028192358)
+  [1m[35m (11.6ms)[0m  [1m[35mCREATE TABLE `voting_candidates` (`id` bigint NOT NULL AUTO_INCREMENT PRIMARY KEY, `voting_id` int NOT NULL, `name` varchar(255) NOT NULL)[0m
+  [1m[35m (0.8ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mActiveRecord::SchemaMigration Create (1.1ms)[0m  [1m[32mINSERT INTO `schema_migrations` (`version`) VALUES ('20181028192358')[0m
+  [1m[35m (1.9ms)[0m  [1m[35mCOMMIT[0m
+Migrating to CreateVotingPartialCandidates (20181028193004)
+  [1m[35m (12.5ms)[0m  [1m[35mCREATE TABLE `voting_partial_candidates` (`id` bigint NOT NULL AUTO_INCREMENT PRIMARY KEY, `partial_id` int NOT NULL, `candidate_id` int NOT NULL, `votes` int NOT NULL)[0m
+  [1m[35m (0.5ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.6ms)[0m  [1m[32mINSERT INTO `schema_migrations` (`version`) VALUES ('20181028193004')[0m
+  [1m[35m (1.9ms)[0m  [1m[35mCOMMIT[0m
+Migrating to AddActiveToVotingVotings (20181028194810)
+  [1m[35m (21.2ms)[0m  [1m[35mALTER TABLE `voting_votings` ADD `active` tinyint(1) DEFAULT FALSE[0m
+  [1m[35m (0.4ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.5ms)[0m  [1m[32mINSERT INTO `schema_migrations` (`version`) VALUES ('20181028194810')[0m
+  [1m[35m (2.4ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mActiveRecord::InternalMetadata Load (1.0ms)[0m  [1m[34mSELECT  `ar_internal_metadata`.* FROM `ar_internal_metadata` WHERE `ar_internal_metadata`.`key` = 'environment' LIMIT 1[0m
+  [1m[35m (1.3ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mActiveRecord::InternalMetadata Create (0.7ms)[0m  [1m[32mINSERT INTO `ar_internal_metadata` (`key`, `value`, `created_at`, `updated_at`) VALUES ('environment', 'test', '2021-04-22 22:03:36', '2021-04-22 22:03:36')[0m
+  [1m[35m (2.5ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (1.3ms)[0m  [1m[34mSELECT RELEASE_LOCK('399719799935377320')[0m
+  [1m[35m (0.6ms)[0m  [1m[34mSELECT `schema_migrations`.`version` FROM `schema_migrations` ORDER BY `schema_migrations`.`version` ASC[0m
