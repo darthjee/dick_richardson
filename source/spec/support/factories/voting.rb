@@ -1,5 +1,5 @@
 FactoryBot.define do
   factory :voting, class: Voting::Voting do
-    active true
+    active { true }
   end
 end
