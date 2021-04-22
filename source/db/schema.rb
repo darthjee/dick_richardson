@@ -10,6 +10,40 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 0) do
+ActiveRecord::Schema.define(version: 2018_10_28_194810) do
+
+  create_table "simulation_ballots", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.float "percentage", null: false
+    t.integer "simulation_id", null: false
+  end
+
+  create_table "simulation_partials", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.float "percentage", null: false
+    t.integer "ballot_id", null: false
+  end
+
+  create_table "simulation_simulations", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  end
+
+  create_table "voting_candidates", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.integer "voting_id", null: false
+    t.string "name", null: false
+  end
+
+  create_table "voting_partial_candidates", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.integer "partial_id", null: false
+    t.integer "candidate_id", null: false
+    t.integer "votes", null: false
+  end
+
+  create_table "voting_partials", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.integer "voting_id", null: false
+    t.text "raw", null: false
+    t.integer "votes", default: 0, null: false
+  end
+
+  create_table "voting_votings", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.boolean "active", default: false
+  end
 
 end
