@@ -46,6 +46,9 @@ gem 'turbolinks',   '5.2.1'
 
 gem 'darthjee-core_ext', '>= 2.0.0'
 gem 'magicka', '~> 0.5.5'
+gem 'faraday'
+gem 'clockwork'
+gem 'darthjee-active_ext'
 
 group :development do
   # Access an interactive console on exception pages
