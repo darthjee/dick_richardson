@@ -28,7 +28,7 @@ describe Simulation::Ballot do
         end
 
         it 'creates partial with the ballot percentage' do
-          expect(ballot.create_partial.percentage).to eq(ballot.percentage)
+          expect(ballot.create_partial.reload.percentage).to eq(ballot.percentage)
         end
       end
 
@@ -40,7 +40,7 @@ describe Simulation::Ballot do
 
           context 'when there are no newer ballots' do
             it 'uses all ballots for calculation' do
-              expect(ballot.create_partial.percentage).to eq(0.5)
+              expect(ballot.create_partial.reload.percentage).to eq(0.5)
             end
           end
 
@@ -50,7 +50,7 @@ describe Simulation::Ballot do
             end
 
             it 'uses only old ballots for calculation' do
-              expect(ballot.create_partial.percentage).to eq(0.5)
+              expect(ballot.create_partial.reload.percentage).to eq(0.5)
             end
           end
         end
@@ -61,7 +61,7 @@ describe Simulation::Ballot do
           end
 
           it 'ignores other simulation ballots' do
-            expect(ballot.create_partial.percentage).to eq(percentage)
+            expect(ballot.create_partial.reload.percentage).to eq(percentage)
           end
         end
       end
