@@ -4,8 +4,8 @@ module Voting
       include Arstotzka
 
       attr_reader :json
-      expose :name, full_path: 'nm'
-      expose :votes, full_path: 'v', type: :integer
+      expose :name, full_path: :nm
+      expose :votes, full_path: :v, type: :integer
 
       def initialize(json)
         @json = json
