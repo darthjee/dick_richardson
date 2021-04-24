@@ -124,6 +124,8 @@ RSpec.configure do |config|
       example.run
     end
   end
+
+  config.include(RSpec::Matchers::Custom)
 end
 
 RSpec::Matchers.define_negated_matcher :not_raise_error, :raise_error
