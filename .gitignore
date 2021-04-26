@@ -4,33 +4,28 @@
 # or operating system, you probably want to add a global ignore instead:
 #   git config --global core.excludesfile '~/.gitignore_global'
 
-# Ignore bundler config.
-/.bundle
-
-# Ignore the default SQLite database.
-/db/*.sqlite3
-/db/*.sqlite3-journal
-
 # Ignore all logfiles and tempfiles.
-/log/*
-/tmp/*
-!/log/.keep
-!/tmp/.keep
+source/log/*
+source/tmp/*
+!source/log/.keep
+!source/tmp/.keep
 
 # Ignore uploaded files in development
-/storage/*
-!/storage/.keep
+source/storage/*
+source/!/storage/.keep
 
-/node_modules
-/yarn-error.log
+source/node_modules
+source/yarn-error.log
 
-/public/assets
-.byebug_history
+source/public/assets
+source/rubycritic
+source/coverage
+source/.yardoc
+source/doc
 
+source/vendor/assets/bower_components/
 # Ignore master key for decrypting credentials and more.
-/config/master.key
-
-trials/*.dat
-trials/*.eps
-.bash_history
-coverage
+source/config/master.key
+source/config/credentials.yml.enc
+**/*.swp
+.env.production
