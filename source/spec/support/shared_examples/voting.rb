@@ -30,7 +30,7 @@ shared_examples 'a method call that creates partial' do |method_name|
 end
 
 shared_examples 'a method call that creates candidates' do |method_name, quantity|
-  it "creates the missing candidates" do
+  it 'creates the missing candidates' do
     expect do
       subject.public_send(method_name)
     end.to change { voting.candidates.count }.by(quantity)

@@ -15,7 +15,7 @@ describe Voting::Worker do
       stub_request(:get, request_url).to_return(status: 200, body: raw)
     end
 
-    it_behaves_like "a method that process votes entries", :perform
+    it_behaves_like 'a method that process votes entries', :perform
   end
 end
 

@@ -50,7 +50,7 @@ describe Voting::PartialsController, type: :controller do
         end
       end
 
-      context "when voting is inactive" do
+      context 'when voting is inactive' do
         let(:active) { false }
 
         it 'does not create a new partial' do
