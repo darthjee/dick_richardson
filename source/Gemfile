@@ -46,6 +46,7 @@ gem 'sinclair',     '~> 1.8.0'
 gem 'tarquinn',     '~> 0.2.0'
 gem 'turbolinks',   '5.2.1'
 gem 'tzinfo-data'
+gem 'sidekiq'
 
 gem 'darthjee-core_ext', '>= 2.0.0'
 
