@@ -257,7 +257,7 @@ GEM
       simplecov_json_formatter (~> 0.1)
     simplecov-html (0.12.3)
     simplecov_json_formatter (0.1.4)
-    sinclair (1.6.7)
+    sinclair (1.8.0)
       activesupport (~> 5.2.0)
     spring (2.1.0)
     spring-watcher-listen (2.0.1)
@@ -314,7 +314,7 @@ PLATFORMS
 
 DEPENDENCIES
   arstotzka (~> 1.6.2)
-  azeroth (>= 0.8.1)
+  azeroth (>= 0.10.1)
   bootsnap (>= 1.1.0)
   bower-rails (~> 0.12.0)
   bundler (= 2.3.20)
@@ -349,7 +349,7 @@ DEPENDENCIES
   sass-rails (= 6.0.0)
   shoulda-matchers (= 4.3.0)
   simplecov (= 0.21.2)
-  sinclair (~> 1.6.7)
+  sinclair (~> 1.8.0)
   spring (= 2.1.0)
   spring-watcher-listen (= 2.0.1)
   tarquinn (~> 0.2.0)
