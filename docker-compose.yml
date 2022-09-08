@@ -8,6 +8,10 @@ services:
       MYSQL_ROOT_PASSWORD: dick_richardson
     ports:
       - 127.0.0.1:$DEV_DICK_RICHARDSON_MYSQL_PORT:3306
+  dev_plague_inc_redis:
+    image: redis:6.2.4
+    container_name: dev_dick_richardson_mysql
+    env_file: .env.dev
 
   dick_richardson_mysql:
     image: mysql:5.7
