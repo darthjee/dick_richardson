@@ -1,7 +1,0 @@
-FROM darthjee/taap:0.0.3
-
-ADD . /home/app/app/
-
-USER root
-
-RUN bundle install --clean
