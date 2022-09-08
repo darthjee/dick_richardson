@@ -37,6 +37,7 @@ services:
       - ./source:/home/app/app
     links:
       - dev_dick_richardson_mysql:mysql
+      - dev_dick_richardson_redis:redis
     env_file: .env.dev
 
 
