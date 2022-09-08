@@ -75,6 +75,7 @@ group :development do
   gem 'yard',                  '0.9.27'
   gem 'yardstick',             '0.9.9'
   gem 'zonebie',               '0.6.1'
+  gem 'zyra',                  '1.1.0'
 end
 
 group :development, :test do

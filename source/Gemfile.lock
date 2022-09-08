@@ -308,6 +308,9 @@ GEM
     yardstick (0.9.9)
       yard (~> 0.8, >= 0.8.7.2)
     zonebie (0.6.1)
+    zyra (1.1.0)
+      activesupport (~> 5.2.0)
+      jace (>= 0.1.1)
 
 PLATFORMS
   x86_64-linux
@@ -361,6 +364,7 @@ DEPENDENCIES
   yard (= 0.9.27)
   yardstick (= 0.9.9)
   zonebie (= 0.6.1)
+  zyra (= 1.1.0)
 
 RUBY VERSION
    ruby 2.7.0p0
