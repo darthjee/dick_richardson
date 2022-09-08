@@ -22,7 +22,7 @@ workflows:
 jobs:
   test:
     docker:
-      - image: darthjee/circleci_dick_richardson-base:0.0.1
+      - image: darthjee/circleci_dick_richardson-base:0.0.2
         environment:
           DICK_RICHARDSON_MYSQL_HOST: mysql
           DICK_RICHARDSON_MYSQL_PORT: 3306
@@ -30,6 +30,9 @@ jobs:
           DICK_RICHARDSON_MYSQL_NAME: dick_richardson
           DICK_RICHARDSON_MYSQL_PASSWORD: dick_richardson
           DICK_RICHARDSON_PASSWORD_SALT: abcd
+          DICK_RICHARDSON_REDIS_URL: redis://redis:6379/0
+      - image: circleci/redis:latest
+        name: redis
       - image: circleci/mysql:5.7
         name: mysql
         environment:
@@ -65,7 +68,7 @@ jobs:
 
   checks:
     docker:
-      - image: darthjee/circleci_dick_richardson-base:0.0.1
+      - image: darthjee/circleci_dick_richardson-base:0.0.2
         environment:
           DICK_RICHARDSON_MYSQL_HOST: mysql
           DICK_RICHARDSON_MYSQL_PORT: 3306
