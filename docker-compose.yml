@@ -9,7 +9,7 @@ services:
     ports:
       - 127.0.0.1:$DEV_DICK_RICHARDSON_MYSQL_PORT:3306
   dev_dick_richardson_redis:
-    image: redis:6.2.4
+    image: redis:7.0.4
     container_name: dev_dick_richardson_redis
     env_file: .env.dev
 
@@ -24,7 +24,7 @@ services:
     volumes:
       - ./mysql:/var/lib/mysql
   dick_richardson_redis:
-    image: redis:6.2.4
+    image: redis:7.0.4
     container_name: dick_richardson_redis
     env_file: .env.dev
 
