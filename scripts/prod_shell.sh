@@ -1,28 +1,34 @@
 #!/bin/bash
 
+source "scripts/render.sh"
+
 function run() {
-  download
-  heroku config | grep -v "^===" | sed -e "s/^\([^:]*\): */\1=/g" > .env.production
-  clean_env & \
-    PRODUCTION_IMAGE=$(docker_url) \
-    docker-compose run dick_richardson_production /bin/bash
+  setup_env
+  clean_env & run_docker
+}
+
+function run_docker() {
+  docker-compose run plague_inc_production /bin/bash
 }
 
 function clean_env() {
-  sleep 5
+  sleep 10
   echo "" > .env.production
 }
 
-function app_name(){
-  echo $(heroku info -s | grep git_url | sed -e "s/.*\///g" | sed -e "s/\.git$//g")
+function setup_env() {
+  get_env_vars | \
+    jq 'map([.key, .value] | join("=")) | .[]' | \
+    sed -e 's/^ *"//g' -e 's/" *$//g'  > .env.production
 }
 
-function download() {
-  docker pull $(docker_url)
-}
+ACTION=$1
 
-function docker_url() {
-  echo registry.heroku.com/$(app_name)/web
-}
-
-run
+case $ACTION in
+  "run")
+    run
+    ;;
+  *)
+    $ACTION
+    ;;
+esac
