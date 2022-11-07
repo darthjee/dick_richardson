@@ -1,6 +1,6 @@
 #!/bin/bash
 
-RENDER_SERVICE_NAME="plague-inc"
+RENDER_SERVICE_NAME="dick_richardson"
 
 function request() {
   METHOD=$1
