@@ -1,18 +1,8 @@
 version: '3'
 services:
-  dev_dick_richardson_mysql:
-    image: mysql:5.7
-    container_name: dev_dick_richardson_mysql
-    env_file: .env.dev
-    environment:
-      MYSQL_ROOT_PASSWORD: dick_richardson
-    ports:
-      - 127.0.0.1:$DEV_DICK_RICHARDSON_MYSQL_PORT:3306
-  dev_dick_richardson_redis:
-    image: redis:7.0.4
-    container_name: dev_dick_richardson_redis
-    env_file: .env.dev
-
+  dick_richardson_redis:
+    image: redis:6.2.4
+    container_name: dick_richardson_redis
   dick_richardson_mysql:
     image: mysql:5.7
     container_name: dick_richardson_mysql
@@ -20,42 +10,37 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: dick_richardson
     ports:
-      - 127.0.0.1:$LOCAL_DICK_RICHARDSON_MYSQL_PORT:3306
-    volumes:
-      - ./mysql:/var/lib/mysql
-  dick_richardson_redis:
-    image: redis:7.0.4
-    container_name: dick_richardson_redis
-    env_file: .env.dev
-
+      - 127.0.0.1:$DICK_RICHARDSON_MYSQL_PORT:3306
 
   #################### Base  ####################
 
   base: &base
-    image: darthjee/dev_dick_richardson
+    image: darthjee/dick_richardson
     volumes:
       - ./source:/home/app/app
     links:
-      - dev_dick_richardson_mysql:mysql
-      - dev_dick_richardson_redis:redis
-    env_file: .env.dev
+      - dick_richardson_mysql:mysql
+      - dick_richardson_redis:redis
+    env_file: .env
 
 
   base_build:
     <<: *base
     build:
       context: .
-      dockerfile: Dockerfile.dev_dick_richardson
+      dockerfile: Dockerfile.dick_richardson
     command: echo done
 
   production_base_build:
     image: darthjee/production_dick_richardson
-    env_file: .env.dev
+    env_file: .env
     environment:
       RAILS_ENV: production
     build:
       context: .
       dockerfile: Dockerfile.production_dick_richardson
+    links:
+      - dick_richardson_mysql:mysql
     command: echo done
   #################### CONTAINERS ####################
 
@@ -88,11 +73,8 @@ services:
   dick_richardson_production:
     env_file: .env.production
     container_name: dick_richardson_production
-    image: $PRODUCTION_IMAGE
-
-  dick_richardson:
-    env_file: .env
-    container_name: dick_richardson
-    image: darthjee/dick_richardson
+    image: darthjee/production_dick_richardson
     links:
-      - dick_richardson_mysql:mysql
+      - dick_richardson_prod_redis:redis
+    environment:
+      - DICK_RICHARDSON_REDIS_URL=redis://redis:6379/0
