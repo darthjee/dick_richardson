@@ -17,6 +17,7 @@ function checkLastVersion() {
     echo "latest commit";
   else
     echo "Not last commit"
+    exit 0
   fi
 }
 
