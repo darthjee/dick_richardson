@@ -13,11 +13,11 @@ gem 'rails', '5.2.8.1'
 # Use pg as the database for Active Record
 gem 'mysql2'
 # Use Puma as the app server
-gem 'puma', '~> 4.3.8'
+gem 'puma', '~> 6.0.0'
 # Use SCSS for stylesheets
-gem 'sass-rails', '6.0.0'
+gem 'sass-rails', '>= 6.0.0'
 # Use Uglifier as compressor for JavaScript assets
-gem 'uglifier', '4.2.0'
+gem 'uglifier', '>= 4.2.0'
 # See https://github.com/rails/execjs#readme for more supported runtimes
 # gem 'mini_racer', platforms: :ruby
 
@@ -38,8 +38,8 @@ gem 'arstotzka',    '~> 1.6.2'
 gem 'azeroth',      '>= 0.10.1'
 gem 'bower-rails',  '~> 0.12.0'
 gem 'magicka',      '~> 0.6.0'
-gem 'newrelic_rpm', '~> 6.9.0.363'
-gem 'nokogiri',     '1.13.8'
+gem 'newrelic_rpm', '~> 8.12.0'
+gem 'nokogiri',     '1.13.9'
 gem 'faraday'
 gem 'rake',         '13.0.6'
 gem 'sinclair',     '~> 1.8.0'
