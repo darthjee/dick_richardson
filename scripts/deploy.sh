@@ -74,9 +74,16 @@ function watch_last_deployment() {
   watch_deployment "$SERVICE_ID" "$DEPLOYMENT_ID"
 }
 
+function run_build() {
+  make PROJECT=production_dick_richardson build
+}
+
 ACTION=$1
 
 case $ACTION in
+  "build")
+    run_build
+    ;;
   "deploy")
     run_deploy
     ;;
