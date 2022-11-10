@@ -3,8 +3,8 @@ workflows:
   version: 2
   test:
     jobs:
-      - test:
-      - checks:
+      - test
+      - checks
       - test-build:
           requires: [test, checks]
       - build-and-release:
