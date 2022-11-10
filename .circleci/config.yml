@@ -3,14 +3,10 @@ workflows:
   version: 2
   test:
     jobs:
-      - test:
-          filters:
-            tags:
-              only: /.*/
-      - checks:
-          filters:
-            tags:
-              only: /.*/
+      - test
+      - checks
+      - test-build:
+          requires: [test, checks]
       - build-and-release:
           requires: [test, checks]
           filters:
@@ -93,6 +89,13 @@ jobs:
       - run:
           name: Rubocop
           command: rubocop
+  test-build:
+    machine: true
+    steps:
+      - checkout
+      - run:
+          name: Build
+          command: scripts/deploy.sh build
   build-and-release:
     machine: true
     steps:

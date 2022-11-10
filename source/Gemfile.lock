@@ -132,7 +132,7 @@ GEM
     method_source (1.0.0)
     mini_mime (1.1.2)
     minitest (5.16.3)
-    msgpack (1.5.6)
+    msgpack (1.6.0)
     mysql2 (0.5.4)
     newrelic_rpm (8.12.0)
     nio4r (2.5.8)
@@ -149,7 +149,7 @@ GEM
       pry (>= 0.9.10, < 0.15)
     pry-rails (0.3.9)
       pry (>= 0.10.4)
-    psych (3.3.3)
+    psych (3.3.4)
     public_suffix (5.0.0)
     puma (6.0.0)
       nio4r (~> 2.0)
@@ -335,7 +335,7 @@ DEPENDENCIES
   azeroth (>= 0.10.1)
   bootsnap (>= 1.1.0)
   bower-rails (~> 0.12.0)
-  bundler (= 2.3.20)
+  bundler (= 2.3.25)
   bundler-audit (= 0.6.1)
   darthjee-core_ext (>= 2.0.0)
   database_cleaner (= 1.8.3)
@@ -388,4 +388,4 @@ RUBY VERSION
    ruby 2.7.0p0
 
 BUNDLED WITH
-   2.3.20
+   2.3.25
