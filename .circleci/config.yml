@@ -7,6 +7,12 @@ workflows:
       - checks
       - test-build:
           requires: [test, checks]
+          filters:
+            tags:
+              only: /.*/
+            branches:
+              except:
+                - master
       - build-and-release:
           requires: [test, checks]
           filters:
